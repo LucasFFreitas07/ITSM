@@ -1,5 +1,7 @@
-from django.db import models
-from django.contrib.auth.models import User, Group
+from django.db import models #type: ignore
+from django.contrib.auth.models import User, Group #type: ignore
+from django.core.exceptions import ValidationError #type: ignore
+
 
 # Create your models here.
 class ITSM_Ticket_Model(models.Model):
@@ -25,25 +27,51 @@ class ITSM_Ticket_Model(models.Model):
 class ITSM_Role_Model(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    name_ger = models.ForeignKey('ITSM_User_Model', on_delete=models.CASCADE, null=True, blank=True)
     descricao = models.TextField()
 
     def __str__(self):
         return f'{self.name}'
     
+    def save(self, *args, **kwargs):
+        self.name = self.name.title()
+        self.descricao = self.descricao.capitalize()
+        role = ITSM_Role_Model.objects.filter(name=self.name).exclude(pk=self.pk).first()
+        if role:
+            raise ValidationError("Grupo já existe.")
+        
+        super(ITSM_Role_Model, self).save(*args, **kwargs)
+        
 class ITSM_User_Model(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100, null=True, blank=True)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
     email = models.EmailField()
     senha = models.CharField(max_length=100)
     role = models.ForeignKey(ITSM_Role_Model, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.name} | {self.role.name}'
-    
-    def save(self):
+        return f'{self.name}'
+
+    def save(self, *args, **kwargs):
         self.name = self.name.title()
+        self.first_name = self.first_name.title() if self.first_name else ''
+        self.last_name = self.last_name.title() if self.last_name else ''
         self.email = self.email.lower()
-        super(ITSM_User_Model, self).save()
+        self.senha = self.senha        
+
+        existing_name = ITSM_User_Model.objects.filter(name__iexact=self.name).exclude(pk=self.pk).exists()
+        if existing_name:
+            raise ValidationError({'name': 'Nome de usuário já existe.'})
+
+        
+        existing_email = ITSM_User_Model.objects.filter(email__iexact=self.email).exclude(pk=self.pk).exists()
+        if existing_email:
+            raise ValidationError({'email': 'Email já cadastrado.'})
+
+        super(ITSM_User_Model, self).save(*args, **kwargs)
+
     
 class ITSM_Group_Model(models.Model):
     id = models.AutoField(primary_key=True)
@@ -54,6 +82,6 @@ class ITSM_Group_Model(models.Model):
     def __str__(self):
         return f'{self.name} | Membros: {self.membros.count()}'
     
-    def save(self):
-        self.name = self.name.title()
-        super(ITSM_Group_Model, self).save()
+    def save(self, *args, **kwargs):
+        self.name = self.name
+        super(ITSM_Group_Model, self).save(*args, **kwargs)

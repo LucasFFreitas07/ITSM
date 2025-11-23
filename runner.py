@@ -1,5 +1,5 @@
 from os import system, getenv
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 from sys import argv
 from time import sleep
 
@@ -12,7 +12,7 @@ def start_api(port):
     try:
         port = input("Insira a porta para a API (default 8000): ") or "8000"
         print("Iniciando API...")
-        system(f"python manage.py runserver 0.0.0.0:{port}")
+        system(f"python manage.py runserver 127.0.0.1:{port}")
     except KeyboardInterrupt:
         print("\n\tAPI encerrada pelo usuário.")
 
