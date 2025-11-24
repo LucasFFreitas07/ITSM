@@ -17,7 +17,7 @@ class ITSM_Ticket_Serializer(serializers.ModelSerializer):
 class ITSM_User_Serializer(serializers.ModelSerializer):
     class Meta:
         model = ITSM_User_Model
-        exclude = ['senha', 'role', 'email', 'name']
+        exclude = ['senha', 'role',]
         # fields = '__all__'
 
 class ITSM_Role_Serializer(serializers.ModelSerializer):
