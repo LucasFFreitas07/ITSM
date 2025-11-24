@@ -34,8 +34,8 @@ class ITSM_Role_Model(models.Model):
         return f'{self.name}'
     
     def save(self, *args, **kwargs):
-        self.name = self.name.title()
-        self.descricao = self.descricao.capitalize()
+        self.name = self.name
+        self.descricao = self.descricao
         role = ITSM_Role_Model.objects.filter(name=self.name).exclude(pk=self.pk).first()
         if role:
             raise ValidationError("Grupo já existe.")
@@ -65,7 +65,6 @@ class ITSM_User_Model(models.Model):
         if existing_name:
             raise ValidationError({'name': 'Nome de usuário já existe.'})
 
-        
         existing_email = ITSM_User_Model.objects.filter(email__iexact=self.email).exclude(pk=self.pk).exists()
         if existing_email:
             raise ValidationError({'email': 'Email já cadastrado.'})
