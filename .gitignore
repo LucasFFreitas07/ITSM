@@ -7,3 +7,7 @@ venv/
 .env
 __env__/
 *.sqlite3
+migrations/
+*.log
+*.db
+*.DS_Store
