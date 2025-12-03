@@ -17,61 +17,9 @@ from .forms import PasswordResetForm, UserForm
     ),
     create=extend_schema(
         description="Cria um novo usuário.",
-        parameters=[
-            {
-                "name": "username",
-                "description": "Nome de usuário do novo usuário.",
-                "required": True,
-                "type": "string",
-            },
-            {
-                "name": "first_name",
-                "description": "Primeiro nome do novo usuário.",
-                "required": False,
-                "type": "string",
-            },
-            {
-                "name": "last_name",
-                "description": "Sobrenome do novo usuário.",
-                "required": False,
-                "type": "string",
-            },
-            {
-                "name": "email",
-                "description": "Email do novo usuário.",
-                "required": False,
-                "type": "string",
-            },
-        ]
     ),
     update=extend_schema(
         description="Atualiza um usuário existente por ID.",
-        parameters=[
-            {
-                "name": "username",
-                "description": "Nome de usuário do usuário.",
-                "required": True,
-                "type": "string",
-            },
-            {
-                "name": "first_name",
-                "description": "Primeiro nome do usuário.",
-                "required": False,
-                "type": "string",
-            },
-            {
-                "name": "last_name",
-                "description": "Sobrenome do usuário.",
-                "required": False,
-                "type": "string",
-            },
-            {
-                "name": "email",
-                "description": "Email do usuário.",
-                "required": False,
-                "type": "string",
-            },
-        ]
     ),
     partial_update=extend_schema(
         description="Atualiza parcialmente um usuário existente por ID.",
@@ -93,25 +41,9 @@ class UserViewSet(viewsets.ModelViewSet):
     ),
     create=extend_schema(
         description="Cria um novo grupo.",
-        parameters=[
-            {
-                "name": "name",
-                "description": "Nome do novo grupo.",
-                "required": True,
-                "type": "string",
-            },
-        ]
     ),
     update=extend_schema(
         description="Atualiza um grupo existente por ID.",
-        parameters=[
-            {
-                "name": "name",
-                "description": "Nome do grupo.",
-                "required": True,
-                "type": "string",
-            },
-        ]
     ),
     partial_update=extend_schema(
         description="Atualiza parcialmente um grupo existente por ID.",
