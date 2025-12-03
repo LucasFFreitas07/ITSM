@@ -17,7 +17,7 @@
             <th>Email</th>
             <th>Nome</th>
             <th>Sobrenome</th>
-            <th>Perfil</th>
+            <th>Ativo?</th>
         </tr>
         {% for user in users %}
         <tr>
@@ -25,11 +25,7 @@
             <td>{{ user.email }}</td>
             <td>{{ user.first_name }}</td>
             <td>{{ user.last_name }}</td>
-            <td>
-                {% for role in role.all %}
-                    {{ role.name }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </td>
+            <td>{{ user.is_active|yesno:"Sim,Não" }}</td>
         </tr>
         {% endfor %}
     </table>

@@ -20,12 +20,12 @@ class RoleAdmin(admin.ModelAdmin):
 
 @admin.register(ITSM_User_Model)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'role', 'first_name', 'last_name', 'email', )
+    list_display = ('id', 'name', 'role', 'first_name', 'last_name', 'email', 'is_active',)
     list_per_page = 10
     search_fields = ('id', 'name', 'first_name', 'last_name', 'email', )
     list_filter = ('role', )
     ordering = ('id', )
-    list_editable = ('role', )
+    list_editable = ('role', 'is_active',)
     list_display_links = ('name',)
     
 
