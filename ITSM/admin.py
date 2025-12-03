@@ -26,6 +26,7 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ('role', )
     ordering = ('id', )
     list_editable = ('role', )
+    list_display_links = ('name',)
     
 
 @admin.register(ITSM_Group_Model)
