@@ -49,7 +49,7 @@ class ITSM_User_Model(models.Model):
     last_name = models.CharField(max_length=100, null=True, blank=True)
     email = models.EmailField()
     senha = models.CharField(max_length=100)
-    role = models.ForeignKey(ITSM_Role_Model, on_delete=models.CASCADE, null=True, blank=True)
+    role = models.ForeignKey(ITSM_Role_Model, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}'
