@@ -135,9 +135,11 @@ def index(request):
 
 def users(request):
     users = ITSM_User_Model.objects.all().order_by('name')
+    role = ITSM_Group_Model.objects.all()
     template = loader.get_template('users.html')
     context = {
         'users': users,
+        'role': role
     }
     return HttpResponse(template.render(context, request))
 
